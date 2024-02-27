@@ -58,6 +58,14 @@ pipeline{
                 }
             }
         }
+
+        post(){
+            always{
+                junit allowEmptyResults: true, testResults:'target/surefire-reports/*.xml,api-test/target/surefire-reports/*.xml'
+            }
+
+        }
+        /*
         stage('Deploy Prod'){
             steps{
                 bat 'docker compose build'
@@ -66,7 +74,7 @@ pipeline{
                 bat 'docker-compose up -d'
                 
             }
-        }        
+        }      */  
     }
     
     
