@@ -53,6 +53,7 @@ pipeline{
                 //Muda o diretorio para executar os testes ja que o POM esta em um subdiretorio dentro do repositorio, alem disso cria uma nova pasta
                 //dentro do workspace do jenkins, caso contrario o build do repositorio de testes iria sobreescrever o build do repositorio do backend
                 dir('taskFrontEnd'){
+                    bat 'mvn clean package'
                     deploy adapters: [tomcat9(credentialsId: 'LoginTomcat', path: '', url: 'http://localhost:8001')], contextPath: 'tasks', war: 'target/tasks.war'
                 }
             }
