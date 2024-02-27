@@ -25,7 +25,7 @@ pipeline{
          stage('Quality Gate'){
             steps {
                 sleep(10)
-                timeout(time:1, unit: 'Minutes'){
+                timeout(time:1, unit: 'MINUTES'){
                     waitForQualityGate abortPipeline:true('SONAR_LOCAL'){
                     bat "${scannerHome}/bin/sonar-scanner -e -Dsonar.projectKey=DeployBack -Dsonar.host.url=http://localhost:9000 -Dsonar.login=278fc4407f092bb14340ae7d5a44dc1a5cb846c0 -Dsonar.java.binaries=target"
                     }
