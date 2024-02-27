@@ -40,6 +40,7 @@ pipeline{
         stage('API Test'){
             steps{
                 git credentialsId: 'LoginGit', url: 'https://github.com/raphaelRD/testApi'
+                bat 'cd api-test'
                 bat 'mvn test'
             }
         }       
