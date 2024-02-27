@@ -36,6 +36,11 @@ pipeline{
             steps{
                 deploy adapters: [tomcat9(credentialsId: 'LoginTomcat', path: '', url: 'http://localhost:8001')], contextPath: 'tasks-backend', war: 'target/tasks-backend.war'
             }
+        }
+        stage('API Test'){
+            steps{
+                git credentialsId: 'LoginGit', url: 'https://github.com/raphaelRD/testApi'
+            }
         }       
     }
     
