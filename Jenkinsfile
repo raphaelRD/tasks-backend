@@ -57,7 +57,16 @@ pipeline{
                     deploy adapters: [tomcat9(credentialsId: 'LoginTomcat', path: '', url: 'http://localhost:8001')], contextPath: 'tasks', war: 'target/tasks.war'
                 }
             }
-        }      
+        }
+        stage('Deploy Prod'){
+            steps{
+                bat 'docker compose build'
+                //o argumento -d é usado pra liberar o terminal após a execução do docker compose, caso contrario o terminal vai ficar
+                //travado e isso pode impedir o Jenkins de seguir em frente
+                bat 'docker-compose up -d'
+                
+            }
+        }        
     }
     
     
