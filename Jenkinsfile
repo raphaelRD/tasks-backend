@@ -1,23 +1,31 @@
 pipeline{
     agent any
     stages{
-        stage('Inicio'){
+        stage('Build Backend'){
             steps {
-                bat 'echo inicio'
+                bat 'mvn clean package _DskipTests=true'
             }
         }
-        stage('Meio'){
+        stage('Unit Tests'){
             steps {
-                bat 'echo Meio'
+                bat 'mvn test'
             }
         }
-        stage('Fim'){
-            steps{
-                sleep(5)
-                bat 'echo Fim'
+        stage('Sonar Analysis'){
+            environment{
+                scannerHome = tool 'SONAR_SCANNER'
+            }
+            steps {
+                withSonarQubeEnv('SONAR_LOCAL'){
+                    bat "${scannerHome}/bin/sonar-scanner -e -Dsonar.projectKey=DeployBack -Dsonar.host.url=http://localhost:9000 -Dsonar.login=278fc4407f092bb14340ae7d5a44dc1a5cb846c0 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions= **/.mvn/**,**/src/test/**,**/model/**,**Application.java"
+                }
+                
             }
         }
+       
     }
     
     
 }
+
+
